@@ -1,0 +1,22 @@
+[project]
+name = "truthlens"
+version = "0.1.0"
+description = "TruthLens FastAPI backend for Vercel deployment"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi",
+  "uvicorn[standard]",
+  "httpx",
+  "langchain",
+  "langchain-core",
+  "langchain-google-genai",
+  "google-generativeai",
+  "supabase",
+  "python-jose[cryptography]",
+  "passlib[bcrypt]",
+  "python-multipart",
+  "pydantic[email]",
+  "pydantic-settings",
+  "python-dotenv",
+  "slowapi",
+]
