@@ -163,10 +163,46 @@ python -m http.server 3000
 Open in browser:
 `http://localhost:3000`
 
-If backend URL changes, update:
-`frontend/js/config.js`
+`frontend/js/config.js` now auto-switches:
+- Localhost: `http://localhost:8001`
+- Production (Vercel): `/api`
 
-## 6. API Quick Reference
+## 6. Vercel Deployment (Frontend + Backend)
+
+This repo is now Vercel-ready with:
+- `api/index.py` (FastAPI serverless entry)
+- `vercel.json` (routing for frontend and API)
+- root `requirements.txt` (installs backend dependencies)
+
+### 6.1 Deploy Steps
+
+1. Push latest code to GitHub.
+2. In Vercel dashboard, click `Add New -> Project`.
+3. Import this GitHub repository.
+4. Keep project root as repository root (`.`).
+5. Add these Environment Variables in Vercel:
+   - `NEWS_API_KEY`
+   - `GOOGLE_API_KEY`
+   - `GEMINI_MODEL`
+   - `SUPABASE_URL`
+   - `SUPABASE_KEY`
+   - `JWT_SECRET`
+   - `JWT_EXPIRE_HOURS`
+   - `SMTP_SERVER`
+   - `SMTP_PORT`
+   - `SMTP_USER`
+   - `SMTP_PASSWORD`
+6. Click `Deploy`.
+
+### 6.2 Production URLs
+
+- Frontend: `https://<your-vercel-domain>/`
+- Backend base: `https://<your-vercel-domain>/api`
+- Example API: `https://<your-vercel-domain>/api/analyze`
+
+## 7. API Quick Reference
+
+Use paths below for local backend (`http://localhost:8001`) or prefix with `/api` on Vercel.
 
 - `GET /` - health/welcome
 - `POST /analyze` - run fake-news claim analysis
@@ -183,7 +219,7 @@ If backend URL changes, update:
 - `POST /auth/delete-confirm` - confirm deletion (OTP + identity key)
 - `POST /auth/cancel-deletion` - cancel scheduled deletion
 
-## 7. Typical User Flow
+## 8. Typical User Flow
 
 1. User registers with email + password.
 2. OTP verification activates account.
@@ -192,7 +228,7 @@ If backend URL changes, update:
 5. Verdict appears with score, summary, flags, sources, and tips.
 6. If logged in, result is stored in history and report can be emailed.
 
-## 8. GitHub Push Guide
+## 9. GitHub Push Guide
 
 From project root:
 
@@ -213,14 +249,14 @@ git commit -m "docs: add professional README"
 git push
 ```
 
-## 9. Team Details
+## 10. Team Details
 
 - **Project:** TruthLens
 - **Theme:** AI & Automation (Beyond Wrappers)
 - **Team Leader:** Vishal Kumar Sahu
 - **Team Name:** Deep Mind
 
-## 10. Future Enhancements
+## 11. Future Enhancements
 
 - Source credibility scoring model
 - Regional language misinformation dataset integration
