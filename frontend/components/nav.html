@@ -1,0 +1,19 @@
+<nav>
+    <a href="#" class="logo" onclick="navigate('home')">Truth<span>Lens</span></a>
+    <div class="nav-links">
+        <a class="nav-link active" onclick="navigate('home')" id="nav-home">Home</a>
+        <a class="nav-link" onclick="navigate('analyzer')" id="nav-analyzer">Analyzer</a>
+        <a class="nav-link" onclick="navigate('history')" id="nav-history" style="display:none;">History</a>
+        <a class="nav-link" onclick="navigate('profile')" id="nav-profile" style="display:none;">Profile</a>
+
+        <div id="auth-out">
+            <button class="btn" onclick="openModal('login-modal')">LOG IN</button>
+            <button class="btn solid" onclick="openModal('register-modal')">SIGN UP</button>
+        </div>
+        <div id="auth-in" style="display:none; align-items:center; gap:15px;">
+            <span id="nav-user" style="color:var(--accent); font-size:12px; cursor:pointer;"
+                onclick="navigate('profile')"></span>
+            <button class="btn" onclick="logout()">LOGOUT</button>
+        </div>
+    </div>
+</nav>

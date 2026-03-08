@@ -1,0 +1,25 @@
+<section id="page-analyzer" class="page">
+    <div class="section-header">
+        <h2>Neural Analyzer</h2>
+        <p>Input data for verification. Results are final but subject to AI confidence levels.</p>
+    </div>
+
+    <div class="analyzer-box tilt-card" id="analyzer-card">
+        <textarea id="claim-input"
+            placeholder="Paste any controversial claim, news headline, or WhatsApp forward..."></textarea>
+        <div class="analyzer-footer" style="transform: translateZ(10px);">
+            <div class="status-indicator">
+                <span class="pulse"></span> REAL-TIME SYNC
+            </div>
+            <button class="btn solid" id="analyze-btn" onclick="analyze()">ANALYZE DATA</button>
+        </div>
+    </div>
+
+    <div class="result-card tilt-card" id="result-card">
+        <div class="score-ring" id="res-score">--</div>
+        <div class="verdict-title" id="res-verdict">UNKNOWN</div>
+        <div class="ai-summary" id="res-summary">Waiting for data...</div>
+        <p style="font-size:11px; color:var(--muted); text-align:center;">* A copy of this report has been cached in
+            your history.</p>
+    </div>
+</section>

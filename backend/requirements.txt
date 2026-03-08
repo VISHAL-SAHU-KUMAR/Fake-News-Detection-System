@@ -1,0 +1,28 @@
+# Web Framework
+fastapi
+uvicorn[standard]
+
+# HTTP Client (async)
+httpx
+
+# LangChain + Gemini
+langchain
+langchain-core
+langchain-google-genai
+google-generativeai
+
+# Database
+supabase
+
+# Authentication
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+
+# Data validation
+pydantic[email]
+pydantic-settings
+
+# Environment & Rate Limiting
+python-dotenv
+slowapi

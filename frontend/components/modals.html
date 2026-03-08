@@ -1,0 +1,243 @@
+<div id="modals-container">
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('login-modal')">&times;</button>
+            <h2>System Login</h2>
+            <div class="form-group">
+                <label>EMAIL ADDRESS</label>
+                <input type="email" id="log-email">
+            </div>
+            <div class="form-group">
+                <label>PASSWORD</label>
+                <input type="password" id="log-pass">
+            </div>
+            <button class="btn solid" style="width:100%; padding:12px;" onclick="doLogin()">AUTHENTICATE</button>
+            <div class="form-error" id="log-err"></div>
+            <button class="link-btn" onclick="swapModal('login-modal', 'forgot-modal')">Forgot Password?</button>
+            <button class="link-btn" onclick="swapModal('login-modal', 'register-modal')">Need an account? Sign
+                Up</button>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="register-modal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('register-modal')">&times;</button>
+            <h2>Create Node</h2>
+            <div class="form-group">
+                <label>ALIAS (NAME)</label>
+                <input type="text" id="reg-name" placeholder="Agent Name">
+            </div>
+            <div class="form-group">
+                <label>EMAIL ADDRESS</label>
+                <input type="email" id="reg-email" placeholder="operative@truthlens.com">
+            </div>
+            <div class="form-group">
+                <label>SECURE PASSWORD</label>
+                <div class="pass-wrapper">
+                    <input type="password" id="reg-pass" placeholder="••••••••">
+                    <button class="toggle-pass" onclick="togglePassword('reg-pass')">👁️</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>CONFIRM PASSWORD</label>
+                <div class="pass-wrapper">
+                    <input type="password" id="reg-pass-confirm" placeholder="••••••••">
+                    <button class="toggle-pass" onclick="togglePassword('reg-pass-confirm')">👁️</button>
+                </div>
+            </div>
+            <button class="btn solid" style="width:100%; padding:12px;" onclick="doRegister()">REGISTER & SEND
+                OTP</button>
+            <div class="form-error" id="reg-err"></div>
+            <button class="link-btn" onclick="swapModal('register-modal', 'login-modal')">Already have access?
+                Login</button>
+        </div>
+    </div>
+
+    <!-- OTP Verification Modal -->
+    <div class="modal-overlay" id="otp-modal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('otp-modal')">&times;</button>
+            <h2>Verification Required</h2>
+            <p style="font-size:12px; color:var(--muted); margin-bottom:20px;">We sent a 6-character Alpha-Numeric OTP
+                to your email. Enter it below to unlock your node.</p>
+
+            <div class="otp-inputs" id="otp-inputs-container">
+                <input type="text" maxlength="1" class="otp-box" onkeyup="handleOtpInput(this, event)">
+                <input type="text" maxlength="1" class="otp-box" onkeyup="handleOtpInput(this, event)">
+                <input type="text" maxlength="1" class="otp-box" onkeyup="handleOtpInput(this, event)">
+                <input type="text" maxlength="1" class="otp-box" onkeyup="handleOtpInput(this, event)">
+                <input type="text" maxlength="1" class="otp-box" onkeyup="handleOtpInput(this, event)">
+                <input type="text" maxlength="1" class="otp-box" onkeyup="handleOtpInput(this, event)">
+            </div>
+
+            <div id="otp-timer-container" style="text-align:center; font-size:11px; margin-bottom: 20px;">
+                <span style="color:var(--muted)">OTP expires in: </span>
+                <span id="otp-timer" style="color:var(--accent); font-weight:700;">01:00</span>
+            </div>
+
+            <button class="btn solid" style="width:100%; padding:12px;" onclick="doVerifyOTP()">VERIFY IDENTITY</button>
+            <button id="resend-btn" class="link-btn" onclick="doResendOTP()"
+                style="width:100%; text-align:center; display:none;">Resend OTP</button>
+
+            <div class="form-error" id="otp-err"></div>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div class="modal-overlay" id="delete-modal">
+        <div class="modal" style="border-color: var(--danger); max-width: 480px;">
+            <button class="modal-close" onclick="closeModal('delete-modal')">&times;</button>
+            <h2 style="color:var(--danger);">Neutralize Node</h2>
+            <p style="font-size:11px; color:var(--muted); margin-bottom:20px;">
+                <strong>NOTICE:</strong> This initiates a 48-hour neutralization protocol. You can appeal and recover
+                your node within this window.
+                Requires 6-character Security OTP and your Identity Key.
+            </p>
+
+            <div id="del-request-view">
+                <button class="btn danger-btn" style="width:100%; padding:15px;" onclick="requestDelete()">REQUEST
+                    SECURITY OTP</button>
+                <button class="link-btn" style="width:100%; text-align:center;" onclick="requestIdentityKey()">Lost your
+                    Identity Key?</button>
+            </div>
+
+            <div id="del-confirm-view" style="display:none;">
+                <div class="form-group">
+                    <label>OPERATIVE IDENTITY KEY (UUID)</label>
+                    <input type="text" id="del-id-key" placeholder="00000000-0000-0000-0000-000000000000"
+                        style="font-size:12px;">
+                </div>
+                <div class="form-group">
+                    <label>6-CHARACTER SECURITY OTP</label>
+                    <div class="otp-inputs" id="del-otp-container" style="margin-top:10px;">
+                        <input type="text" maxlength="1" class="otp-box del-otp-box"
+                            onkeyup="handleOtpInput(this, event)">
+                        <input type="text" maxlength="1" class="otp-box del-otp-box"
+                            onkeyup="handleOtpInput(this, event)">
+                        <input type="text" maxlength="1" class="otp-box del-otp-box"
+                            onkeyup="handleOtpInput(this, event)">
+                        <input type="text" maxlength="1" class="otp-box del-otp-box"
+                            onkeyup="handleOtpInput(this, event)">
+                        <input type="text" maxlength="1" class="otp-box del-otp-box"
+                            onkeyup="handleOtpInput(this, event)">
+                        <input type="text" maxlength="1" class="otp-box del-otp-box"
+                            onkeyup="handleOtpInput(this, event)">
+                    </div>
+                </div>
+                <button class="btn solid danger-btn" style="width:100%; padding:15px;"
+                    onclick="confirmDelete()">SCHEDULE NEUTRALIZATION</button>
+            </div>
+
+            <div class="form-error" id="del-err"></div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal-overlay" id="forgot-modal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('forgot-modal')">&times;</button>
+            <h2>Reset Access</h2>
+            <div class="form-group">
+                <label>REGISTERED EMAIL</label>
+                <input type="email" id="forgot-email">
+            </div>
+            <button class="btn solid" style="width:100%; padding:12px;" onclick="doForgotPassword()">SEND RESET
+                OTP</button>
+            <div class="form-success" id="forgot-suc"></div>
+            <div class="form-error" id="forgot-err"></div>
+            <button class="link-btn" onclick="swapModal('forgot-modal', 'reset-modal')">Already have OTP? Reset
+                Now</button>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal -->
+    <div class="modal-overlay" id="reset-modal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('reset-modal')">&times;</button>
+            <h2>Confirm Reset</h2>
+            <div class="form-group">
+                <label>EMAIL</label>
+                <input type="email" id="res-email">
+            </div>
+            <div class="form-group">
+                <label>OTP CODE</label>
+                <input type="text" id="res-otp">
+            </div>
+            <div class="form-group">
+                <label>NEW PASSWORD</label>
+                <input type="password" id="res-pass">
+            </div>
+            <button class="btn solid" style="width:100%; padding:12px;" onclick="doResetPassword()">UPDATE
+                PASSWORD</button>
+            <div class="form-success" id="res-suc"></div>
+            <div class="form-error" id="res-err"></div>
+        </div>
+    </div>
+
+    <!-- Analysis Result Modal -->
+    <div class="modal-overlay" id="analysis-modal">
+        <div class="modal"
+            style="max-width: 900px; padding: 0; background: var(--bg); overflow: hidden; border: 1px solid var(--border);">
+            <button class="modal-close" onclick="closeModal('analysis-modal')"
+                style="right: 20px; top: 20px; z-index: 10;">&times;</button>
+            <div class="analysis-header"
+                style="padding: 40px; background: linear-gradient(135deg, rgba(0,255,204,0.1), transparent); border-bottom: 1px solid var(--border);">
+                <div style="display: flex; align-items: center; gap: 30px;">
+                    <div id="modal-score-ring" class="score-ring-large"
+                        style="position: relative; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; border: 5px solid var(--accent);">
+                        <span id="modal-score">0</span>
+                    </div>
+                    <div>
+                        <h2 id="modal-verdict"
+                            style="margin: 0; font-size: 32px; letter-spacing: 2px; color: var(--accent);">VERIFYING...
+                        </h2>
+                        <p id="modal-claim"
+                            style="margin: 10px 0 0; color: var(--muted); font-style: italic; font-size: 14px;"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="analysis-body"
+                style="padding: 30px; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; max-height: 60vh; overflow-y: auto;">
+                <div class="analysis-left">
+                    <section style="margin-bottom: 25px;">
+                        <h4 style="letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; font-size: 12px;">
+                            EXECUTIVE SUMMARY</h4>
+                        <p id="modal-summary" style="line-height: 1.6; font-size: 15px; margin-bottom: 10px;"></p>
+                        <p id="modal-hindi-summary"
+                            style="line-height: 1.6; font-size: 14px; color: #888; border-top: 1px solid #222; padding-top: 10px;">
+                        </p>
+                    </section>
+                    <section>
+                        <h4 style="letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; font-size: 12px;">
+                            EVIDENCE SOURCES</h4>
+                        <div id="modal-sources" style="display: grid; gap: 10px;"></div>
+                    </section>
+                </div>
+                <div class="analysis-right">
+                    <section style="margin-bottom: 25px;">
+                        <h4 style="letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; font-size: 12px;">
+                            NEURAL INDICATORS</h4>
+                        <div id="modal-indicators" style="display: grid; gap: 12px;"></div>
+                    </section>
+                    <section>
+                        <h4 style="letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; font-size: 12px;">
+                            VERIFICATION TIPS</h4>
+                        <div
+                            style="background: rgba(0,255,204,0.05); padding: 15px; border-radius: 8px; border-left: 2px solid var(--accent);">
+                            <ul id="modal-tips-list"
+                                style="padding-left: 20px; margin: 0; font-size: 12px; color: #ccc;"></ul>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="analysis-footer"
+                style="padding: 15px 30px; background: rgba(0,0,0,0.3); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border);">
+                <div style="font-size: 10px; color: #555;">OPERATION ID: <span id="modal-ref-id">#000000</span></div>
+                <button class="btn solid" onclick="closeModal('analysis-modal')"
+                    style="padding: 8px 20px;">ACKNOWLEDGE</button>
+            </div>
+        </div>
+    </div>
+</div>
